@@ -5,85 +5,79 @@
  * The randomness increases as you go down the grid
  */
 
-let colorVariation = 1;
+let colorVariation = 0;
 
-function setup(){
-    // Initial setup
-    createCanvas(800, 800);
-    background(255);
+function setup() {
+  // Initial setup
+  createCanvas(800, 800);
+  background(255);
 
-    // comment this line to make the sketch run indefinitely
-    noLoop();
+  // TODO: comment this line to make the sketch run indefinitely
+  //
+  // noLoop();
 
-    // uncomment this line to make it run at 24fps
-    // frameRate(24);
-
-
-
-
+  // TODO: uncomment this line to make it run indefinitely
+  // uncomment this line to make it run at 24fps
+  frameRate(24);
 }
 
-function drawSquares(){
-    background(255);
+function drawSquares() {
+  background(255);
 
-    // setting width and position of the grid
-    let gridSize = width / 10 * 9;
-    let offSet = width / 20;
-    translate(offSet, offSet);
+  // setting width and position of the grid
+  let gridSize = (width / 10) * 9;
+  let offSet = width / 20;
+  translate(offSet, offSet);
 
+  let numSquares = 10;
+  let squareSize = gridSize / numSquares;
 
-    
-    let numSquares = 10;
-    let squareSize = gridSize / numSquares;
+  let rotationMult = 15;
+  let offsetMult = 30;
+  let gridVariation = 3;
 
-    let rotationMult = 15;
-    let offsetMult = 30;
-    let gridVariation = 3;
+  for (let i = 0; i < numSquares; i += 1) {
+    for (let j = 0; j < numSquares; j += 1) {
+      // random rotation
+      rotation =
+        ((random(-1, 1) * j) / gridSize / gridVariation) *
+        rotationMult *
+        Math.PI;
 
-    for(let i = 0; i < numSquares; i+=1){
-        for(let j =0; j < numSquares; j += 1){
+      // random offset
+      let offSetRandomness =
+        ((random(-1, 1) * j) / gridSize / gridVariation) *
+        squareSize *
+        offsetMult;
 
-            // random rotation
-            rotation = random(-1, 1) * j/gridSize/gridVariation * rotationMult * Math.PI;
+      // setting x and y position
+      let x = i * squareSize + offSetRandomness;
+      let y = j * squareSize;
 
+      push();
+      translate(x, y);
+      rotate(rotation);
 
-            // random offset
-            let offSetRandomness = random(-1, 1) * j/gridSize/gridVariation * squareSize * offsetMult;
-            
-            // setting x and y position
-            let x = i * squareSize + offSetRandomness;
-            let y = j * squareSize;
+      strokeWeight(1.5);
 
+      colorMode(HSB);
+      fill(random(0, 10) + i * j + colorVariation, random(40, 80), 100);
 
+      // TODO: uncomment this line to make the squares transparent
+      // noFill();
 
-            push();
-            translate(x, y);
-            rotate(rotation);
+      rect(0, 0, squareSize, squareSize);
 
-
-            strokeWeight(1.5);
-
-            colorMode(HSB);
-            fill(random(0,10) + ((i * j)) + colorVariation, random(40,80), 100);
-
-            // comment this out to make it transparent
-            noFill();
-
-            rect(0,0, squareSize, squareSize);            
-
-            pop();
-        }
-
+      pop();
     }
+  }
 }
 
-function draw(){
-    colorVariation += 5;
-    if(colorVariation > 360){
-        colorVariation = 0;
-    }
+function draw() {
+  colorVariation += 5;
+  colorVariation = colorVariation % 360;
 
-
-    drawSquares();
-    console.log(colorVariation);
+  drawSquares();
+  console.log(colorVariation);
 }
+
