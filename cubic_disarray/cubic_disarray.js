@@ -80,4 +80,3 @@ function draw() {
   drawSquares();
   console.log(colorVariation);
 }
-
