@@ -22,7 +22,7 @@ function setup() {
 }
 
 function drawSquares() {
-  background(255);
+  background(100);
 
   // setting width and position of the grid
   let gridSize = (width / 10) * 9;
